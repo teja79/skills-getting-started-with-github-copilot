@@ -15,10 +15,39 @@
     <main>
       <section id="activities-container">
         <h3>Available Activities</h3>
-        <div id="activities-list">
+        <div id="activities-list" class="activities-grid">
           <!-- Activities will be loaded here -->
-          <p>Loading activities...</p>
+          <p class="loading">Loading activities...</p>
         </div>
+
+        <!-- Template for an activity card with participants -->
+        <template id="activity-card-template">
+          <article class="activity-card">
+            <header class="activity-header">
+              <h4 class="activity-title"></h4>
+              <div class="activity-meta">
+                <span class="activity-schedule"></span>
+                <span class="activity-capacity"></span>
+              </div>
+            </header>
+
+            <p class="activity-desc"></p>
+
+            <!-- Participants section -->
+            <details class="participants" aria-label="Participants">
+              <summary class="participants-summary">
+                Participants (<span class="participants-count">0</span>)
+              </summary>
+              <ul class="participants-list">
+                <!-- participant items injected here -->
+              </ul>
+            </details>
+
+            <footer class="activity-footer">
+              <button class="join-btn" type="button">Sign up</button>
+            </footer>
+          </article>
+        </template>
       </section>
 
       <section id="signup-container">

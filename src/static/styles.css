@@ -57,6 +57,108 @@ section h3 {
   color: #1a237e;
 }
 
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.activity-card {
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  border: 1px solid #e6eef7;
+  border-radius: 10px;
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(20, 35, 60, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.activity-title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #072b48;
+}
+
+.activity-meta {
+  font-size: 0.82rem;
+  color: #2b6b9a;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.activity-desc {
+  margin: 0;
+  color: #274a63;
+  font-size: 0.95rem;
+}
+
+.participants {
+  padding-top: 6px;
+  border-top: 1px dashed #eef6fb;
+}
+
+.participants summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #0b3a5b;
+  list-style: none;
+  outline: none;
+}
+
+.participants-list {
+  margin: 8px 0 0 18px;
+  padding: 0;
+  list-style: disc;
+  color: #0b3a5b;
+}
+
+.participants-list .participant {
+  margin: 6px 0;
+  background: rgba(11,58,91,0.04);
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  font-size: 0.92rem;
+}
+
+.participants-list .participants-empty {
+  color: #557a95;
+  font-style: italic;
+  margin: 6px 0;
+}
+
+/* Align footer button to the right */
+.activity-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.join-btn {
+  background: linear-gradient(180deg,#2f7bd9,#1b5fc4);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.join-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(27,95,196,0.14);
+}
+
 .activity-card {
   margin-bottom: 15px;
   padding: 15px;

@@ -84,3 +84,89 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize app
   fetchActivities();
 });
+
+(function () {
+  const listEl = document.getElementById('activities-list');
+  const tpl = document.getElementById('activity-card-template');
+  const selectEl = document.getElementById('activity');
+  const signupContainer = document.getElementById('signup-container');
+
+  function clearChildren(el) {
+    while (el.firstChild) el.removeChild(el.firstChild);
+  }
+
+  function makeParticipantItem(email) {
+    const li = document.createElement('li');
+    li.className = 'participant';
+    li.textContent = email;
+    return li;
+  }
+
+  function renderActivity(name, data) {
+    const clone = tpl.content.cloneNode(true);
+    clone.querySelector('.activity-title').textContent = name;
+    clone.querySelector('.activity-desc').textContent = data.description || '';
+    clone.querySelector('.activity-schedule').textContent = data.schedule || '';
+    clone.querySelector('.activity-capacity').textContent = `(${(data.participants||[]).length}/${data.max_participants || '—'})`;
+    clone.querySelector('.participants-count').textContent = (data.participants || []).length;
+
+    const list = clone.querySelector('.participants-list');
+    if (Array.isArray(data.participants) && data.participants.length) {
+      data.participants.forEach(p => list.appendChild(makeParticipantItem(p)));
+    } else {
+      const li = document.createElement('li');
+      li.className = 'participants-empty';
+      li.textContent = 'No participants yet — be the first!';
+      list.appendChild(li);
+    }
+
+    const btn = clone.querySelector('.join-btn');
+    btn.addEventListener('click', () => {
+      // set the select and focus email
+      if (selectEl) {
+        selectEl.value = name;
+        const emailInput = document.getElementById('email');
+        if (emailInput) emailInput.focus();
+        signupContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    listEl.appendChild(clone);
+  }
+
+  function populateSelect(activities) {
+    if (!selectEl) return;
+    // keep the default option, append others
+    Object.keys(activities).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      selectEl.appendChild(opt);
+    });
+  }
+
+  async function load() {
+    let activities = {};
+    try {
+      const res = await fetch('/activities');
+      if (res.ok) activities = await res.json();
+    } catch (e) {
+      // ignore, activities remains empty
+    }
+
+    clearChildren(listEl);
+    populateSelect(activities);
+
+    if (!Object.keys(activities).length) {
+      const p = document.createElement('p');
+      p.className = 'info';
+      p.textContent = 'No activities available right now.';
+      listEl.appendChild(p);
+      return;
+    }
+
+    Object.entries(activities).forEach(([name, data]) => renderActivity(name, data));
+  }
+
+  document.addEventListener('DOMContentLoaded', load);
+})();
